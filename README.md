@@ -51,258 +51,258 @@ Oracle默认READ_COMMITTED隔离界别
 转账为例环境搭建
 1.	创建数据库，导入初始数据
 ```xml
-			CREATE TABLE `account` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `name` varchar(20) NOT NULL,
-			  `money` double DEFAULT NULL,
-			  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-			INSERT INTO `account` VALUES ('1', 'aaa', '1000');
-			INSERT INTO `account` VALUES ('2', 'bbb', '1000');
-			INSERT INTO `account` VALUES ('3', 'ccc', '1000');
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `money` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+INSERT INTO `account` VALUES ('1', 'aaa', '1000');
+INSERT INTO `account` VALUES ('2', 'bbb', '1000');
+INSERT INTO `account` VALUES ('3', 'ccc', '1000');
 ```
 2.	导入基本jar包
 ```xml
-			<dependencies>
-			    <dependency>
-			      <groupId>junit</groupId>
-			      <artifactId>junit</artifactId>
-			      <version>4.11</version>
-			      <scope>test</scope>
-			    </dependency>
-			    <dependency>
-			      <groupId>com.mchange</groupId>
-			      <artifactId>c3p0</artifactId>
-			      <version>0.9.5.2</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>aopalliance</groupId>
-			      <artifactId>aopalliance</artifactId>
-			      <version>1.0</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>commons-logging</groupId>
-			      <artifactId>commons-logging</artifactId>
-			      <version>1.1.1</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>log4j</groupId>
-			      <artifactId>log4j</artifactId>
-			      <version>1.2.17</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>org.aspectj</groupId>
-			      <artifactId>aspectjweaver</artifactId>
-			      <version>1.7.3</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>mysql</groupId>
-			      <artifactId>mysql-connector-java</artifactId>
-			      <version>5.1.6</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>org.springframework</groupId>
-			      <artifactId>spring-aop</artifactId>
-			      <version>4.3.11.RELEASE</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>org.springframework</groupId>
-			      <artifactId>spring-beans</artifactId>
-			      <version>4.3.11.RELEASE</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>org.springframework</groupId>
-			      <artifactId>spring-context</artifactId>
-			      <version>4.3.11.RELEASE</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>org.springframework</groupId>
-			      <artifactId>spring-core</artifactId>
-			      <version>4.3.11.RELEASE</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>org.springframework</groupId>
-			      <artifactId>spring-expression</artifactId>
-			      <version>4.3.11.RELEASE</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>org.springframework</groupId>
-			      <artifactId>spring-jdbc</artifactId>
-			      <version>4.3.10.RELEASE</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>org.springframework</groupId>
-			      <artifactId>spring-test</artifactId>
-			      <version>4.0.6.RELEASE</version>
-			    </dependency>
-			    <dependency>
-			      <groupId>org.springframework</groupId>
-			      <artifactId>spring-tx</artifactId>
-			      <version>4.3.10.RELEASE</version>
-			    </dependency>
-			  </dependencies>
+	<dependencies>
+	    <dependency>
+	      <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <version>4.11</version>
+	      <scope>test</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.mchange</groupId>
+	      <artifactId>c3p0</artifactId>
+	      <version>0.9.5.2</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>aopalliance</groupId>
+	      <artifactId>aopalliance</artifactId>
+	      <version>1.0</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>commons-logging</groupId>
+	      <artifactId>commons-logging</artifactId>
+	      <version>1.1.1</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>log4j</groupId>
+	      <artifactId>log4j</artifactId>
+	      <version>1.2.17</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.aspectj</groupId>
+	      <artifactId>aspectjweaver</artifactId>
+	      <version>1.7.3</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>mysql</groupId>
+	      <artifactId>mysql-connector-java</artifactId>
+	      <version>5.1.6</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-aop</artifactId>
+	      <version>4.3.11.RELEASE</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-beans</artifactId>
+	      <version>4.3.11.RELEASE</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-context</artifactId>
+	      <version>4.3.11.RELEASE</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-core</artifactId>
+	      <version>4.3.11.RELEASE</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-expression</artifactId>
+	      <version>4.3.11.RELEASE</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-jdbc</artifactId>
+	      <version>4.3.10.RELEASE</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-test</artifactId>
+	      <version>4.0.6.RELEASE</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-tx</artifactId>
+	      <version>4.3.10.RELEASE</version>
+	    </dependency>
+	  </dependencies>
 ```
 3.	面向接口编程 创建Service
 ```java
-			/**
-			 * Created by Zhuang on 2018/4/23.
-			 * 转账案例的业务层接口
-			 */
-			public interface AccountService {
-			    /**
-			     *
-			     * @param out   :转出账号
-			     * @param in    :转入账号
-			     * @param money :转账金额
-			     */
-			    public void transfer(String out,String in,Double money);
-			}
+/**
+ * Created by Zhuang on 2018/4/23.
+ * 转账案例的业务层接口
+ */
+public interface AccountService {
+    /**
+     *
+     * @param out   :转出账号
+     * @param in    :转入账号
+     * @param money :转账金额
+     */
+    public void transfer(String out,String in,Double money);
+}
 ```
 ```java
-			/**
-			 * Created by Zhuang on 2018/4/23.
-			 * 转账案例的业务层的实现类
-			 */
-			public class AccountServiceImpl implements AccountService {
-			    //注入DAO类
-			    private AccountDao accountDao;
-			
-			    public void setAccountDao(AccountDao accountDao) {
-			        this.accountDao = accountDao;
-			    }
-			
-			    @Override
-			    public void transfer(String out, String in, Double money) {
-			        accountDao.outMoney(out,money);
-			        accountDao.inMoney(in,money);
-			    }
-			}
+/**
+ * Created by Zhuang on 2018/4/23.
+ * 转账案例的业务层的实现类
+ */
+public class AccountServiceImpl implements AccountService {
+    //注入DAO类
+    private AccountDao accountDao;
+
+    public void setAccountDao(AccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
+
+    @Override
+    public void transfer(String out, String in, Double money) {
+        accountDao.outMoney(out,money);
+        accountDao.inMoney(in,money);
+    }
+}
 ```
 4.	创建Dao层
 ```java
-			/**
-			 * Created by Zhuang on 2018/4/23.
-			 * 转账案例的DAO层接口
-			 */
-			public interface AccountDao {
-			    /**
-			     *
-			     * @param out   :转出账号
-			     * @param money :转账金额
-			     */
-			    public void outMoney(String out,Double money);
-			
-			    /**
-			     *
-			     * @param in    :转入账号
-			     * @param money :转账金额
-			     */
-			    public void inMoney(String in,Double money);
-			}
+/**
+ * Created by Zhuang on 2018/4/23.
+ * 转账案例的DAO层接口
+ */
+public interface AccountDao {
+    /**
+     *
+     * @param out   :转出账号
+     * @param money :转账金额
+     */
+    public void outMoney(String out,Double money);
+
+    /**
+     *
+     * @param in    :转入账号
+     * @param money :转账金额
+     */
+    public void inMoney(String in,Double money);
+}
 ```
 ```java
-			/**
-			 * Created by Zhuang on 2018/4/23.
-			 * 转账案例的DAO层的实现类
-			 */
-			public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
-			    @Override
-			    public void outMoney(String out, Double money) {
-			        String sql = "update account set money = money - ? where name = ?";
-			        this.getJdbcTemplate().update(sql,money,out);
-			    }
-			
-			    @Override
-			    public void inMoney(String in, Double money) {
-			        String sql = "update account set money = money + ? where name = ?";
-			        this.getJdbcTemplate().update(sql,money,in);
-			    }
-			}
+/**
+ * Created by Zhuang on 2018/4/23.
+ * 转账案例的DAO层的实现类
+ */
+public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
+    @Override
+    public void outMoney(String out, Double money) {
+        String sql = "update account set money = money - ? where name = ?";
+        this.getJdbcTemplate().update(sql,money,out);
+    }
+
+    @Override
+    public void inMoney(String in, Double money) {
+        String sql = "update account set money = money + ? where name = ?";
+        this.getJdbcTemplate().update(sql,money,in);
+    }
+}
 ```
 
 ##  四、编程式的事务控制  ##
 1. 配置事务管理器
 ```xml
-		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		        <property name="dataSource" ref="dataSource"/>
-		</bean>
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+</bean>
 ```	
 2. 配置事务管理的模板:Spring为了简化事务管理的代码而提供的类
 ```xml
-		<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
-		        <property name="transactionManager" ref="transactionManager"/>
-		</bean>
+<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+</bean>
 ```
 3. 向accountService类里注入事务管理的模板
 ```xml
-		<!--配置业务层的类-->
-		<bean id="accountService" class="cn.jxufe.spring.demo1.service.AccountServiceImpl">
-		<property name="accountDao" ref="accountDao"/>
-		<property name="transactionTemplate" ref="transactionTemplate"/>
-		</bean>
+<!--配置业务层的类-->
+<bean id="accountService" class="cn.jxufe.spring.demo1.service.AccountServiceImpl">
+	<property name="accountDao" ref="accountDao"/>
+	<property name="transactionTemplate" ref="transactionTemplate"/>
+</bean>
 ```
 4. 事务控制
 ```java
-			public void transfer(final String out,final String in,final Double money) {
-			    transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-			        @Override
-			        protected void doInTransactionWithoutResult(TransactionStatus status) {
-			            accountDao.outMoney(out,money);
-			            //int i = 1 / 0;
-			            accountDao.inMoney(in,money);
-			        }
-			    });
-			}
+public void transfer(final String out,final String in,final Double money) {
+    transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+        @Override
+        protected void doInTransactionWithoutResult(TransactionStatus status) {
+            accountDao.outMoney(out,money);
+            //int i = 1 / 0;
+            accountDao.inMoney(in,money);
+        }
+    });
+}
 ```
 5. 测试类
 ```java
-			/**
-			 * Created by Zhuang on 2018/4/23.
-			 * 转账案例的测试类
-			 */
-			@RunWith(SpringJUnit4ClassRunner.class)
-			@ContextConfiguration("classpath:applicationContext.xml")
-			public class SpringDemo1 {
-			    //测试业务层类
-			    @Resource(name = "accountService")
-			    private AccountService accountService;
-			    @Test
-			    public void demo1(){
-			        accountService.transfer("aaa","bbb",200d);
-			    }
-			}
+/**
+ * Created by Zhuang on 2018/4/23.
+ * 转账案例的测试类
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext.xml")
+public class SpringDemo1 {
+    //测试业务层类
+    @Resource(name = "accountService")
+    private AccountService accountService;
+    @Test
+    public void demo1(){
+        accountService.transfer("aaa","bbb",200d);
+    }
+}
 ```
 
 ## 五、声明式事务管理 ##
 1. 基于TransactionProxyFactoryBean的方式
 	1. 配置事务管理器
 ```xml
-		    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		        <property name="dataSource" ref="dataSource"/>
-		    </bean>
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
 ```
 	2. 配置业务层的代理
 ```xml
-		    <bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		        <!--配置目标对象-->
-		        <property name="target" ref="accountService"/>
-		        <!--注入事务管理器-->
-		        <property name="transactionManager" ref="transactionManager"/>
-		        <!--注入事务属性-->
-		        <property name="transactionAttributes" >
-		            <props>
-		                <!--
-		                    prop的格式:
-		                       * PROPAGATION :事物的传播行为
-		                       * ISOLATION   :事务的隔离级别
-		                       * readOnly     :只读
-		                       * -Exception  :发生哪些异常回滚事务
-		                       * +Exception  :发生哪些异常事务不回滚
-		                -->
-		                <prop key="transfer">PROPAGATION_REQUIRED</prop>
-		            </props>
-		        </property>
-		    </bean>
+<bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <!--配置目标对象-->
+    <property name="target" ref="accountService"/>
+    <!--注入事务管理器-->
+    <property name="transactionManager" ref="transactionManager"/>
+    <!--注入事务属性-->
+    <property name="transactionAttributes" >
+        <props>
+            <!--
+                prop的格式:
+                   * PROPAGATION :事物的传播行为
+                   * ISOLATION   :事务的隔离级别
+                   * readOnly     :只读
+                   * -Exception  :发生哪些异常回滚事务
+                   * +Exception  :发生哪些异常事务不回滚
+            -->
+            <prop key="transfer">PROPAGATION_REQUIRED</prop>
+        </props>
+    </property>
+</bean>
 ```
 	3. 测试类修改
 	```java
@@ -334,85 +334,85 @@ Oracle默认READ_COMMITTED隔离界别
 2. 基于AspectJ的XML方式的配置
 	1. 配置事务通知
 ```xml
-		    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-		        <tx:attributes>
-		            <!--
-		                   * PROPAGATION        :事物的传播行为
-		                   * ISOLATION          :事务的隔离级别
-		                   * readOnly           :只读
-		                   * rollback-for       :发生哪些异常回滚事务
-		                   * no-rollback-for    :发生哪些异常事务不回滚
-		                   * timeout            :过期信息
-		            -->
-		            <tx:method name="transfer" propagation="REQUIRED"/>
-		        </tx:attributes>
-		    </tx:advice>
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <tx:attributes>
+        <!--
+               * PROPAGATION        :事物的传播行为
+               * ISOLATION          :事务的隔离级别
+               * readOnly           :只读
+               * rollback-for       :发生哪些异常回滚事务
+               * no-rollback-for    :发生哪些异常事务不回滚
+               * timeout            :过期信息
+        -->
+        <tx:method name="transfer" propagation="REQUIRED"/>
+    </tx:attributes>
+</tx:advice>
 ```
 	2. 配置切面
 ```xml
-	    <aop:config>
-	        <!--配置切入点-->
-	        <aop:pointcut id="pointcut1" expression="execution(* cn.jxufe.spring.demo3.service.AccountService+.*(..))"/>
-	        <!--配置切面-->
-	        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut1"/>
-	    </aop:config>
+<aop:config>
+    <!--配置切入点-->
+    <aop:pointcut id="pointcut1" expression="execution(* cn.jxufe.spring.demo3.service.AccountService+.*(..))"/>
+    <!--配置切面-->
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut1"/>
+</aop:config>
 ```
 	3. 测试类
 ```java
-	/**
-	 * Created by Zhuang on 2018/4/23.
-	 * Spring声明式事务管理的方式二:基于AspectJ的XML方式的配置
-	 */
-	@RunWith(SpringJUnit4ClassRunner.class)
-	@ContextConfiguration("classpath:applicationContext3.xml")
-	public class SpringDemo3 {
-	    @Resource(name = "accountService")
-	    private AccountService accountService;
-	    @Test
-	    /**
-	     * 转账案例:
-	     */
-	    public void demo3(){
-	        accountService.transfer("aaa","bbb",200d);
-	    }
-	}
+/**
+ * Created by Zhuang on 2018/4/23.
+ * Spring声明式事务管理的方式二:基于AspectJ的XML方式的配置
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext3.xml")
+public class SpringDemo3 {
+    @Resource(name = "accountService")
+    private AccountService accountService;
+    @Test
+    /**
+     * 转账案例:
+     */
+    public void demo3(){
+        accountService.transfer("aaa","bbb",200d);
+    }
+}
 ```
 3. 基于注解的事务管理的方式
 	1. 配置事务管理器
 ```xml
-		    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		        <property name="dataSource" ref="dataSource"/>
-		    </bean>
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
 ```
 	2. 开启注解事务
 ```xml
-		    <tx:annotation-driven transaction-manager="transactionManager" />
+<tx:annotation-driven transaction-manager="transactionManager" />
 ```
 	3. 业务层实现类
 ```java
-	/**
-	 * @Transactional注解中的属性
-	 * propagation        :事物的传播行为
-	 * isolation          :事务的隔离级别
-	 * readOnly           :只读
-	 * rollback-for       :发生哪些异常回滚事务
-	 * no-rollback-for    :发生哪些异常事务不回滚
-	 */
-	@Transactional
-	public class AccountServiceImpl implements AccountService {
-	    //注入DAO类
-	    private AccountDao accountDao;
-	
-	    public void setAccountDao(AccountDao accountDao) {
-	        this.accountDao = accountDao;
-	    }
-	
-	    @Override
-	    public void transfer(String out,String in,Double money) {
-	        accountDao.outMoney(out,money);
-	        //异常:
-	        int i = 1 / 0;
-	        accountDao.inMoney(in,money);
-	    }
-	}
+/**
+ * @Transactional注解中的属性
+ * propagation        :事物的传播行为
+ * isolation          :事务的隔离级别
+ * readOnly           :只读
+ * rollback-for       :发生哪些异常回滚事务
+ * no-rollback-for    :发生哪些异常事务不回滚
+ */
+@Transactional
+public class AccountServiceImpl implements AccountService {
+    //注入DAO类
+    private AccountDao accountDao;
+
+    public void setAccountDao(AccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
+
+    @Override
+    public void transfer(String out,String in,Double money) {
+        accountDao.outMoney(out,money);
+        //异常:
+        int i = 1 / 0;
+        accountDao.inMoney(in,money);
+    }
+}
 ```		
