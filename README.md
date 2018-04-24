@@ -277,149 +277,149 @@ public class SpringDemo1 {
 ## 五、声明式事务管理 ##
 1. 基于TransactionProxyFactoryBean的方式
 	1. 配置事务管理器
-```xml
-<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="dataSource"/>
-</bean>
-```
+	```xml
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource"/>
+	</bean>
+	```
 	2. 配置业务层的代理
-```xml
-<bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-    <!--配置目标对象-->
-    <property name="target" ref="accountService"/>
-    <!--注入事务管理器-->
-    <property name="transactionManager" ref="transactionManager"/>
-    <!--注入事务属性-->
-    <property name="transactionAttributes" >
-        <props>
-            <!--
-                prop的格式:
-                   * PROPAGATION :事物的传播行为
-                   * ISOLATION   :事务的隔离级别
-                   * readOnly     :只读
-                   * -Exception  :发生哪些异常回滚事务
-                   * +Exception  :发生哪些异常事务不回滚
-            -->
-            <prop key="transfer">PROPAGATION_REQUIRED</prop>
-        </props>
-    </property>
-</bean>
-```
+	```xml
+	<bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	    <!--配置目标对象-->
+	    <property name="target" ref="accountService"/>
+	    <!--注入事务管理器-->
+	    <property name="transactionManager" ref="transactionManager"/>
+	    <!--注入事务属性-->
+	    <property name="transactionAttributes" >
+	        <props>
+	            <!--
+	                prop的格式:
+	                   * PROPAGATION :事物的传播行为
+	                   * ISOLATION   :事务的隔离级别
+	                   * readOnly     :只读
+	                   * -Exception  :发生哪些异常回滚事务
+	                   * +Exception  :发生哪些异常事务不回滚
+	            -->
+	            <prop key="transfer">PROPAGATION_REQUIRED</prop>
+	        </props>
+	    </property>
+	</bean>
+	```
 	3. 测试类修改
-```java
+	```java
+		/**
+		 * Created by Zhuang on 2018/4/23.
+		 * Spring的声明式事务管理的方式一的测试类
+		 */
+		@RunWith(SpringJUnit4ClassRunner.class)
+		@ContextConfiguration("classpath:applicationContext2.xml")
+		public class SpringDemo2 {
+		    /**
+		     * 注入代理类:因为代理类进行了增强的操作
+		     */
+		
+		    //测试业务层类
+		    @Resource(name = "accountServiceProxy")
+		    //@Resource(name = "accountService")
+		    private AccountService accountService;
+		    @Test
+		    /**
+		     * 转账案例:
+		     */
+		    public void demo2(){
+		        accountService.transfer("aaa","bbb",200d);
+		    }
+		
+		}
+	```
+2. 基于AspectJ的XML方式的配置
+	1. 配置事务通知
+	```xml
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	    <tx:attributes>
+	        <!--
+	               * PROPAGATION        :事物的传播行为
+	               * ISOLATION          :事务的隔离级别
+	               * readOnly           :只读
+	               * rollback-for       :发生哪些异常回滚事务
+	               * no-rollback-for    :发生哪些异常事务不回滚
+	               * timeout            :过期信息
+	        -->
+	        <tx:method name="transfer" propagation="REQUIRED"/>
+	    </tx:attributes>
+	</tx:advice>
+	```
+
+	2. 配置切面
+	```xml
+	<aop:config>
+	    <!--配置切入点-->
+	    <aop:pointcut id="pointcut1" expression="execution(* cn.jxufe.spring.demo3.service.AccountService+.*(..))"/>
+	    <!--配置切面-->
+	    <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut1"/>
+	</aop:config>
+	```
+
+	3. 测试类
+	
+	```java
 	/**
 	 * Created by Zhuang on 2018/4/23.
-	 * Spring的声明式事务管理的方式一的测试类
+	 * Spring声明式事务管理的方式二:基于AspectJ的XML方式的配置
 	 */
 	@RunWith(SpringJUnit4ClassRunner.class)
-	@ContextConfiguration("classpath:applicationContext2.xml")
-	public class SpringDemo2 {
-	    /**
-	     * 注入代理类:因为代理类进行了增强的操作
-	     */
-	
-	    //测试业务层类
-	    @Resource(name = "accountServiceProxy")
-	    //@Resource(name = "accountService")
+	@ContextConfiguration("classpath:applicationContext3.xml")
+	public class SpringDemo3 {
+	    @Resource(name = "accountService")
 	    private AccountService accountService;
 	    @Test
 	    /**
 	     * 转账案例:
 	     */
-	    public void demo2(){
+	    public void demo3(){
 	        accountService.transfer("aaa","bbb",200d);
 	    }
-	
 	}
-```
-2. 基于AspectJ的XML方式的配置
-	1. 配置事务通知
-```xml
-<tx:advice id="txAdvice" transaction-manager="transactionManager">
-    <tx:attributes>
-        <!--
-               * PROPAGATION        :事物的传播行为
-               * ISOLATION          :事务的隔离级别
-               * readOnly           :只读
-               * rollback-for       :发生哪些异常回滚事务
-               * no-rollback-for    :发生哪些异常事务不回滚
-               * timeout            :过期信息
-        -->
-        <tx:method name="transfer" propagation="REQUIRED"/>
-    </tx:attributes>
-</tx:advice>
-```
-
-	2. 配置切面
-```xml
-<aop:config>
-    <!--配置切入点-->
-    <aop:pointcut id="pointcut1" expression="execution(* cn.jxufe.spring.demo3.service.AccountService+.*(..))"/>
-    <!--配置切面-->
-    <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut1"/>
-</aop:config>
-```
-
-	3. 测试类
-	
-```java
-/**
- * Created by Zhuang on 2018/4/23.
- * Spring声明式事务管理的方式二:基于AspectJ的XML方式的配置
- */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext3.xml")
-public class SpringDemo3 {
-    @Resource(name = "accountService")
-    private AccountService accountService;
-    @Test
-    /**
-     * 转账案例:
-     */
-    public void demo3(){
-        accountService.transfer("aaa","bbb",200d);
-    }
-}
-```
+	```
 3. 基于注解的事务管理的方式
 	1. 配置事务管理器
-```xml
-<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="dataSource"/>
-</bean>
-```
+	```xml
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource"/>
+	</bean>
+	```
 
 	2. 开启注解事务
-```xml
-<tx:annotation-driven transaction-manager="transactionManager" />
-```
+	```xml
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	```
 
 	3. 业务层实现类
 	
-```java
-/**
- * @Transactional注解中的属性
- * propagation        :事物的传播行为
- * isolation          :事务的隔离级别
- * readOnly           :只读
- * rollback-for       :发生哪些异常回滚事务
- * no-rollback-for    :发生哪些异常事务不回滚
- */
-@Transactional
-public class AccountServiceImpl implements AccountService {
-    //注入DAO类
-    private AccountDao accountDao;
-
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
-    }
-
-    @Override
-    public void transfer(String out,String in,Double money) {
-        accountDao.outMoney(out,money);
-        //异常:
-        int i = 1 / 0;
-        accountDao.inMoney(in,money);
-    }
-}
-```		
+	```java
+	/**
+	 * @Transactional注解中的属性
+	 * propagation        :事物的传播行为
+	 * isolation          :事务的隔离级别
+	 * readOnly           :只读
+	 * rollback-for       :发生哪些异常回滚事务
+	 * no-rollback-for    :发生哪些异常事务不回滚
+	 */
+	@Transactional
+	public class AccountServiceImpl implements AccountService {
+	    //注入DAO类
+	    private AccountDao accountDao;
+	
+	    public void setAccountDao(AccountDao accountDao) {
+	        this.accountDao = accountDao;
+	    }
+	
+	    @Override
+	    public void transfer(String out,String in,Double money) {
+	        accountDao.outMoney(out,money);
+	        //异常:
+	        int i = 1 / 0;
+	        accountDao.inMoney(in,money);
+	    }
+	}
+	```		
