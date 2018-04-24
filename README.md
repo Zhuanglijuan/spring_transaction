@@ -18,7 +18,7 @@ Spring为不同的持久化框架提供了不同PlatformTransactionManager接口
 
 ![](![](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/1.jpg))
 
-	一般使用DatasourceTransactionManager和HibernateTransactionManager接口
+一般使用DatasourceTransactionManager和HibernateTransactionManager接口
 2. TransactionDefinition 事务定义信息（隔离、传播、超时、只读）
 如果不考虑隔离性，会引发安全问题如下:
 **脏读、不可重复读、幻读。**
@@ -36,19 +36,20 @@ Spring为不同的持久化框架提供了不同PlatformTransactionManager接口
 
 ![]( [https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/2.jpg](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/2.jpg))
  
-	MySQL默认采用REPEATABLE_READ隔离级别
-	Oracle默认READ_COMMITTED隔离界别
-	 
-	出现复杂情况:调用Service1.aaa()和Service2中的bbb(),才能给完成一个
+MySQL默认采用REPEATABLE_READ隔离级别
+Oracle默认READ_COMMITTED隔离界别
+ 
+出现复杂情况:调用Service1.aaa()和Service2中的bbb(),才能给完成一个
 
-	事务的传播行为:解决业务层方法之间的相互调用的问题
-	事务的传播行为有七种:如图
+事务的传播行为:解决业务层方法之间的相互调用的问题
+事务的传播行为有七种:如图
 ![]([https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/3.png](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/3.png))
 	
 3.TransactionStatus 事务具体运行状态
 
 转账为例环境搭建
 1.	创建数据库，导入初始数据
+```
 			CREATE TABLE `account` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `name` varchar(20) NOT NULL,
@@ -58,7 +59,9 @@ Spring为不同的持久化框架提供了不同PlatformTransactionManager接口
 			INSERT INTO `account` VALUES ('1', 'aaa', '1000');
 			INSERT INTO `account` VALUES ('2', 'bbb', '1000');
 			INSERT INTO `account` VALUES ('3', 'ccc', '1000');
+```
 2.	导入基本jar包
+```
 			<dependencies>
 			    <dependency>
 			      <groupId>junit</groupId>
@@ -137,6 +140,7 @@ Spring为不同的持久化框架提供了不同PlatformTransactionManager接口
 			      <version>4.3.10.RELEASE</version>
 			    </dependency>
 			  </dependencies>
+```
 3.	面向接口编程 创建Service
 ```java
 			/**
