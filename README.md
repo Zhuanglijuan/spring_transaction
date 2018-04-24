@@ -16,25 +16,25 @@
 1. PlatformTransactionManager 事务管理器
 Spring为不同的持久化框架提供了不同PlatformTransactionManager接口实现
 
-![](![](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/1.jpg))
+![](![](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/1.jpg)
 
 一般使用DatasourceTransactionManager和HibernateTransactionManager接口
 2. TransactionDefinition 事务定义信息（隔离、传播、超时、只读）
 如果不考虑隔离性，会引发安全问题如下:
 **脏读、不可重复读、幻读。**
 
-	**脏读：**
+**脏读：**
 一个事务读取到了另一个事物改写但还未提交的数据，如果这些数据被回滚，则读到的数据是无效的。
 
-	**不可重复读：**
+**不可重复读：**
 在同一个事务中，多次读取同一数据返回的结果有所不同。
 
-	**幻读：**
+**幻读：**
 一个事务读取了几行记录后，另一个事务插入了一些记录，再后来的查询中，第一个事务就会发现有些原来没有的记录。产生了幻读现象。
 
-	**数据库提供了四个隔离界别**
+**数据库提供了四个隔离界别**
 
-![]( [https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/2.jpg](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/2.jpg))
+![]( [https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/2.jpg](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/2.jpg)
  
 MySQL默认采用REPEATABLE_READ隔离级别
 Oracle默认READ_COMMITTED隔离界别
@@ -43,7 +43,7 @@ Oracle默认READ_COMMITTED隔离界别
 
 事务的传播行为:解决业务层方法之间的相互调用的问题
 事务的传播行为有七种:如图
-![]([https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/3.png](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/3.png))
+![]([https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/3.png](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/3.png)
 	
 3.TransactionStatus 事务具体运行状态
 
