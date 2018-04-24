@@ -305,7 +305,7 @@ public class SpringDemo1 {
 </bean>
 ```
 	3. 测试类修改
-	```java
+```java
 	/**
 	 * Created by Zhuang on 2018/4/23.
 	 * Spring的声明式事务管理的方式一的测试类
@@ -330,7 +330,7 @@ public class SpringDemo1 {
 	    }
 	
 	}
-	```
+```
 2. 基于AspectJ的XML方式的配置
 	1. 配置事务通知
 ```xml
@@ -348,6 +348,7 @@ public class SpringDemo1 {
     </tx:attributes>
 </tx:advice>
 ```
+
 	2. 配置切面
 ```xml
 <aop:config>
@@ -357,7 +358,9 @@ public class SpringDemo1 {
     <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut1"/>
 </aop:config>
 ```
+
 	3. 测试类
+	
 ```java
 /**
  * Created by Zhuang on 2018/4/23.
@@ -384,11 +387,14 @@ public class SpringDemo3 {
     <property name="dataSource" ref="dataSource"/>
 </bean>
 ```
+
 	2. 开启注解事务
 ```xml
 <tx:annotation-driven transaction-manager="transactionManager" />
 ```
+
 	3. 业务层实现类
+	
 ```java
 /**
  * @Transactional注解中的属性
