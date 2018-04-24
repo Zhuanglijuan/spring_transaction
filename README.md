@@ -16,7 +16,8 @@
 1. PlatformTransactionManager 事务管理器
 Spring为不同的持久化框架提供了不同PlatformTransactionManager接口实现
 
- ![](https://i.imgur.com/JKvAdqH.jpg)
+![](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/1.jpg)
+
 	一般使用DatasourceTransactionManager和HibernateTransactionManager接口
 2. TransactionDefinition 事务定义信息（隔离、传播、超时、只读）
 如果不考虑隔离性，会引发安全问题如下:
@@ -33,7 +34,7 @@ Spring为不同的持久化框架提供了不同PlatformTransactionManager接口
 
 	**数据库提供了四个隔离界别**
 
-	![](https://i.imgur.com/MSwSB4J.jpg)
+	[https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/2.jpg](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/2.jpg)
  
 	MySQL默认采用REPEATABLE_READ隔离级别
 	Oracle默认READ_COMMITTED隔离界别
@@ -42,7 +43,7 @@ Spring为不同的持久化框架提供了不同PlatformTransactionManager接口
 
 	事务的传播行为:解决业务层方法之间的相互调用的问题
 	事务的传播行为有七种:如图
-
+[https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/3.png](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/3.png)
 	
 3.TransactionStatus 事务具体运行状态
 
