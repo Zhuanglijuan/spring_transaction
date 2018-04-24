@@ -40,6 +40,7 @@ Spring为不同的持久化框架提供了不同PlatformTransactionManager接口
 MySQL默认采用REPEATABLE_READ隔离级别
 Oracle默认READ_COMMITTED隔离界别
  
+![](https://github.com/Zhuanglijuan/spring_transaction/blob/master/imgs/4.png)
 出现复杂情况:调用Service1.aaa()和Service2中的bbb(),才能给完成一个
 
 事务的传播行为:解决业务层方法之间的相互调用的问题
