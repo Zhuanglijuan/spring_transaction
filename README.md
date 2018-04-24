@@ -50,7 +50,7 @@ Oracle默认READ_COMMITTED隔离界别
 
 转账为例环境搭建
 1.	创建数据库，导入初始数据
-```
+```xml
 			CREATE TABLE `account` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `name` varchar(20) NOT NULL,
@@ -62,7 +62,7 @@ Oracle默认READ_COMMITTED隔离界别
 			INSERT INTO `account` VALUES ('3', 'ccc', '1000');
 ```
 2.	导入基本jar包
-```
+```xml
 			<dependencies>
 			    <dependency>
 			      <groupId>junit</groupId>
@@ -222,19 +222,25 @@ Oracle默认READ_COMMITTED隔离界别
 
 ##  四、编程式的事务控制  ##
 1. 配置事务管理器
+```xml
 		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		        <property name="dataSource" ref="dataSource"/>
-		</bean>	
+		</bean>
+```	
 2. 配置事务管理的模板:Spring为了简化事务管理的代码而提供的类
+```xml
 		<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
 		        <property name="transactionManager" ref="transactionManager"/>
 		</bean>
+```
 3. 向accountService类里注入事务管理的模板
+```xml
 		<!--配置业务层的类-->
 		<bean id="accountService" class="cn.jxufe.spring.demo1.service.AccountServiceImpl">
 		<property name="accountDao" ref="accountDao"/>
 		<property name="transactionTemplate" ref="transactionTemplate"/>
 		</bean>
+```
 4. 事务控制
 ```java
 			public void transfer(final String out,final String in,final Double money) {
@@ -270,10 +276,13 @@ Oracle默认READ_COMMITTED隔离界别
 ## 五、声明式事务管理 ##
 1. 基于TransactionProxyFactoryBean的方式
 	1. 配置事务管理器
+```xml
 		    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		        <property name="dataSource" ref="dataSource"/>
 		    </bean>
+```
 	2. 配置业务层的代理
+```xml
 		    <bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		        <!--配置目标对象-->
 		        <property name="target" ref="accountService"/>
@@ -294,6 +303,7 @@ Oracle默认READ_COMMITTED隔离界别
 		            </props>
 		        </property>
 		    </bean>
+```
 	3. 测试类修改
 	```java
 	/**
@@ -323,6 +333,7 @@ Oracle默认READ_COMMITTED隔离界别
 	```
 2. 基于AspectJ的XML方式的配置
 	1. 配置事务通知
+```xml
 		    <tx:advice id="txAdvice" transaction-manager="transactionManager">
 		        <tx:attributes>
 		            <!--
@@ -336,13 +347,16 @@ Oracle默认READ_COMMITTED隔离界别
 		            <tx:method name="transfer" propagation="REQUIRED"/>
 		        </tx:attributes>
 		    </tx:advice>
+```
 	2. 配置切面
+```xml
 	    <aop:config>
 	        <!--配置切入点-->
 	        <aop:pointcut id="pointcut1" expression="execution(* cn.jxufe.spring.demo3.service.AccountService+.*(..))"/>
 	        <!--配置切面-->
 	        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut1"/>
 	    </aop:config>
+```
 	3. 测试类
 ```java
 	/**
@@ -365,11 +379,15 @@ Oracle默认READ_COMMITTED隔离界别
 ```
 3. 基于注解的事务管理的方式
 	1. 配置事务管理器
+```xml
 		    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		        <property name="dataSource" ref="dataSource"/>
 		    </bean>
+```
 	2. 开启注解事务
+```xml
 		    <tx:annotation-driven transaction-manager="transactionManager" />
+```
 	3. 业务层实现类
 ```java
 	/**
